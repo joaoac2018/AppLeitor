@@ -9,6 +9,10 @@ const MedidorAnalogico = ({sentidoHorario = true, direcaoSeta = '→' }) => {
   const ponteiroComprimento = 80;
   const [angulo, setAngulo] = useState(0);
 
+  // offset único para alinhar ponteiro, números e traços
+  const offset = -20;
+
+
   const calcularAngulo = (x, y) => {
     const dx = x - centro;
     const dy = y - centro;
@@ -18,7 +22,7 @@ const MedidorAnalogico = ({sentidoHorario = true, direcaoSeta = '→' }) => {
   };
 
   const calcularLeitura = (anguloAtual, sentidoHorario) => {
-    const anguloCorrigido = (anguloAtual + 90) % 360;
+    const anguloCorrigido = (anguloAtual + (offset + 90)) % 360;
     let faixa = Math.floor(anguloCorrigido / 36);
     if (!sentidoHorario) {
       faixa = (10 - faixa -1) % 10;
@@ -33,36 +37,58 @@ const MedidorAnalogico = ({sentidoHorario = true, direcaoSeta = '→' }) => {
   });
 
   const gerarNumeros = () => {
-    const numeros = [];
-    const raioNumeros = raio - 10;
+  const elementos = [];
+  const raioNumeros = raio - 15; // posição dos números
+  const raioTracoExterno = raio; // início do traço na borda
+  const raioTracoInterno = raioNumeros - 1; // fim do traço, antes do número
 
-    for (let i = 0; i < 10; i++) {
-      const direcao = sentidoHorario ? 1 : -1;
-      const anguloNum = (i * 36 * direcao - 90) * (Math.PI / 180);
+  for (let i = 0; i < 10; i++) {
+    const direcao = sentidoHorario ? 1 : -1;
+    const anguloNum = (i * 36 * direcao - 90) * (Math.PI / 180);
 
-      const x = centro + raioNumeros * Math.cos(anguloNum);
-      const y = centro + raioNumeros * Math.sin(anguloNum);
-      numeros.push(
-        <SvgText
-          key={i}
-          x={x}
-          y={y}
-          fontSize="16"
-          fill="black"
-          textAnchor="middle"
-          alignmentBaseline="middle"
-        >
-          {i}
-        </SvgText>
-      );
-    }
-    return numeros;
-  };
+    // posição dos números
+    const xNum = centro + raioNumeros * Math.cos(anguloNum);
+    const yNum = centro + raioNumeros * Math.sin(anguloNum);
 
-  const rad = angulo * (Math.PI / 180);
-  const x2 = centro + ponteiroComprimento * Math.cos(rad);
-  const y2 = centro + ponteiroComprimento * Math.sin(rad);
+    // posição dos traços
+    const xTick1 = centro + raioTracoExterno * Math.cos(anguloNum);
+    const yTick1 = centro + raioTracoExterno * Math.sin(anguloNum);
+    const xTick2 = centro + raioTracoInterno * Math.cos(anguloNum);
+    const yTick2 = centro + raioTracoInterno * Math.sin(anguloNum);
 
+
+    elementos.push(
+      <SvgText
+        key={`num-${i}`}
+        x={xNum}
+        y={yNum}
+        fontSize="16"
+        fill="black"
+        textAnchor="middle"
+        alignmentBaseline="middle"
+      >
+        {i}
+      </SvgText>
+    );
+
+    elementos.push(
+      <Line
+        key={`tick-${i}`}
+        x1={xTick1}
+        y1={yTick1}
+        x2={xTick2}
+        y2={yTick2}
+        stroke="black"
+        strokeWidth="2"
+      />
+    );
+  }
+  return elementos;
+};
+// cálculo do ponteiro principal
+const rad = (angulo + offset) * (Math.PI / 180);
+const xPonteiro = centro + ponteiroComprimento * Math.cos(rad);
+const yPonteiro = centro + ponteiroComprimento * Math.sin(rad);
 
   return (
     <View style={styles.medidor}>
@@ -81,8 +107,8 @@ const MedidorAnalogico = ({sentidoHorario = true, direcaoSeta = '→' }) => {
             <Line
               x1={centro}
               y1={centro}
-              x2={x2}
-              y2={y2}
+              x2={xPonteiro}
+              y2={yPonteiro}
               stroke="#408156"
               strokeWidth="3"
             />
@@ -122,7 +148,7 @@ const styles = StyleSheet.create({
   fontSize: 50,
   marginTop: -25,
   textAlign: 'center',
-  color: '#4caf50',
+  color: '#408156',
 },
 });
 
