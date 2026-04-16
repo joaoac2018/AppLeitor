@@ -4,7 +4,7 @@
     "slug": "Appleitor",
     "version": "1.0.0",
     "orientation": "landscape",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo-1.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/SplashScreen.png",
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/IconeApp.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
