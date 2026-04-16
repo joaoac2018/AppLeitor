@@ -38,9 +38,9 @@ const MedidorAnalogico = ({sentidoHorario = true, direcaoSeta = '→' }) => {
 
   const gerarNumeros = () => {
   const elementos = [];
-  const raioNumeros = raio - 15; // posição dos números
+  const raioNumeros = raio - 20; // posição dos números
   const raioTracoExterno = raio; // início do traço na borda
-  const raioTracoInterno = raioNumeros - 1; // fim do traço, antes do número
+  const raioTracoInterno = raio - 10; // fim do traço, antes do número
 
   for (let i = 0; i < 10; i++) {
     const direcao = sentidoHorario ? 1 : -1;

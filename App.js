@@ -13,10 +13,11 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
+        
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home"
             component={HomeScreen}
-            options={{ title: 'Bem-vindo ao App de Medidores' }}
+            options={{ title: 'Bem-vindo ao simulador de medidores' }}
           />
           <Stack.Screen
             name="PainelDeMedidores"

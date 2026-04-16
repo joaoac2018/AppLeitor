@@ -6,9 +6,8 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.titulo}>Bem-vindo ao Leitor de Medidores</Text>
       <Text style={styles.texto}>
-        Este aplicativo ajuda o leiturista a interpretar a leitura dos medidores analógicos.
-        Os ponteiros representam unidade, dezena, centena e milhar, e cada um
-        avança o próximo como engrenagens.
+        Este aplicativo foi criado para auxiliar o leiturista na execução da leitura dos medidores com ponteiros.
+        Clique no botão abaixo para começar a leitura e acessar o painel de medidores.
       </Text>
       <Button
         title="Começar leitura"
@@ -27,13 +26,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fedc57',
   },
   titulo: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
   },
   texto: {
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 30,
     paddingHorizontal: 30,
     textAlign: 'center',
